@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { logger } from './common/helpers/logger'
+import { EtherScanTx } from './models/EtherScanTx'
 
-export async function getTransactionsBySenderEtherscan() {
+export async function getTransactionsBySenderEtherscan(): Promise<EtherScanTx[]> {
   logger.info('getTransactionsBySenderEtherscan started')
 
   if (!process.env.OPERATOR_ADDRESS) {
@@ -33,7 +34,7 @@ export async function getTransactionsBySenderEtherscan() {
     if (response.data.status === '1') {
 
       logger.info('getTransactionsBySenderEtherscan finished')
-      return response.data.result;
+      return response.data.result as EtherScanTx[];
     } else {
       console.error(response.data.message);
 

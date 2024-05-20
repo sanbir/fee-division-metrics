@@ -1,6 +1,5 @@
 import { holesky, mainnet } from 'viem/chains'
-import { createPublicClient, createWalletClient, http } from 'viem'
-import { privateKeyToAccount } from 'viem/accounts'
+import { createPublicClient, http } from 'viem'
 import process from 'process'
 
 if (!process.env.RPC_URL) {
@@ -19,21 +18,7 @@ if (!chain) {
   throw new Error('Chain is not clear from RPC_URL. Use Infura')
 }
 
-if (!process.env.PRIVATE_KEY) {
-  throw new Error('No PRIVATE_KEY in ENV')
-}
-
-const key = process.env.PRIVATE_KEY as `0x${string}`
-
-export const account = privateKeyToAccount(key)
-
 export const publicClient = createPublicClient({
   chain,
   transport: http(process.env.RPC_URL),
-})
-
-export const walletClient = createWalletClient({
-  chain,
-  transport: http(process.env.RPC_URL),
-  account,
 })
