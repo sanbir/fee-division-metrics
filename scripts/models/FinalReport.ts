@@ -1,5 +1,6 @@
 export interface FinalReport {
-  execution_timestamp: string
+  start_execution_timestamp: string
+  end_execution_timestamp: string
   gas_spent: string
   total_ETH_distributed: string
   total_ETH_client_part: string

@@ -5,7 +5,8 @@ import { FinalReport } from './scripts/models/FinalReport'
 import { getGasSpent } from './scripts/getGasSpent'
 import { getExecutionTimestamp } from './scripts/getExecutionTimestamp'
 import { getEthDistributed } from './scripts/getEthDistributed'
-import { getTotal_ETH_distributed } from './scripts/getTotal_ETH_distributed'
+import { iterateSuccessfulTxs } from './scripts/iterate_successful_txs'
+import { getAllFeeRecipientsCount } from './scripts/getAllFeeRecipientsCount'
 
 async function main() {
   logger.info('97-test started')
@@ -16,22 +17,23 @@ async function main() {
   const successfulTxs = txs.filter(tx => tx.isError === '0' && tx.txreceipt_status === '1')
   logger.info(successfulTxs.length, 'successful txs fetched from Etherscan')
 
-  const execution_timestamp = getExecutionTimestamp(successfulTxs)
+  const {start_execution_timestamp, end_execution_timestamp} = getExecutionTimestamp(successfulTxs)
   const gas_spent = getGasSpent(txs)
   const {
     total_ETH_client_part,
     total_ETH_P2P_part,
     total_ETH_referrer_part,
-    total_ETH_distributed
-  } = await getTotal_ETH_distributed(successfulTxs)
+    total_ETH_distributed,
+    fee_dividers_used,
+    new_fee_dividers_deployed
+  } = await iterateSuccessfulTxs(successfulTxs)
+  const addresses_scanned: number = await getAllFeeRecipientsCount()
 
-  const addresses_scanned: number = 0
-  const fee_dividers_used: number = 0
-  const new_fee_dividers_deployed: number = 0
   const legacy_divisions: number = 0
 
   const finalReport: FinalReport = {
-    execution_timestamp,
+    start_execution_timestamp,
+    end_execution_timestamp,
     gas_spent,
     total_ETH_distributed,
     total_ETH_client_part,
