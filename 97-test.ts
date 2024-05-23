@@ -4,9 +4,9 @@ import { getTransactionsBySenderEtherscan } from './scripts/getTransactionsBySen
 import { FinalReport } from './scripts/models/FinalReport'
 import { getGasSpent } from './scripts/getGasSpent'
 import { getExecutionTimestamp } from './scripts/getExecutionTimestamp'
-import { getEthDistributed } from './scripts/getEthDistributed'
 import { iterateSuccessfulTxs } from './scripts/iterate_successful_txs'
 import { getAllFeeRecipientsCount } from './scripts/getAllFeeRecipientsCount'
+import { getLegacyDivisions } from './scripts/getLegacyDivisions'
 
 async function main() {
   logger.info('97-test started')
@@ -27,9 +27,8 @@ async function main() {
     fee_dividers_used,
     new_fee_dividers_deployed
   } = await iterateSuccessfulTxs(successfulTxs)
-  const addresses_scanned: number = await getAllFeeRecipientsCount()
-
-  const legacy_divisions: number = 0
+  const addresses_scanned = await getAllFeeRecipientsCount()
+  const legacy_divisions = getLegacyDivisions(successfulTxs)
 
   const finalReport: FinalReport = {
     start_execution_timestamp,

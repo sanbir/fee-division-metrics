@@ -1,5 +1,6 @@
 import { getEthDistributed } from './getEthDistributed'
 import { EtherScanTx } from './models/EtherScanTx'
+import { formatEther } from 'viem'
 
 export async function iterateSuccessfulTxs(successfulTxs: EtherScanTx[]) {
   let total_ETH_client_partInWei: bigint = 0n
@@ -24,10 +25,10 @@ export async function iterateSuccessfulTxs(successfulTxs: EtherScanTx[]) {
     }
   }
 
-  const total_ETH_client_part: string = (total_ETH_client_partInWei / 10n**18n).toString()
-  const total_ETH_P2P_part: string = (total_ETH_P2P_partInWei / 10n**18n).toString()
-  const total_ETH_referrer_part: string = (total_ETH_referrer_partInWei / 10n**18n).toString()
-  const total_ETH_distributed: string = ((total_ETH_client_partInWei + total_ETH_P2P_partInWei + total_ETH_referrer_partInWei) / 10n**18n).toString()
+  const total_ETH_client_part: string = formatEther(total_ETH_client_partInWei)
+  const total_ETH_P2P_part: string = formatEther(total_ETH_P2P_partInWei)
+  const total_ETH_referrer_part: string = formatEther(total_ETH_referrer_partInWei)
+  const total_ETH_distributed: string = formatEther(total_ETH_client_partInWei + total_ETH_P2P_partInWei + total_ETH_referrer_partInWei)
 
   return {
     total_ETH_client_part,
