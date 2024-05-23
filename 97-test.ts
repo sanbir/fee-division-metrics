@@ -44,6 +44,12 @@ async function main() {
     legacy_divisions
   }
 
+  const jsonString = JSON.stringify(finalReport, (key, value) =>
+    typeof value === 'bigint' ? value.toString() : value
+  )
+
+  logger.log(jsonString)
+
   logger.info('97-test finished')
 }
 
