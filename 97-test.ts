@@ -38,10 +38,10 @@ async function main() {
     total_ETH_client_part,
     total_ETH_P2P_part,
     total_ETH_referrer_part,
-    addresses_scanned,
-    fee_dividers_used,
-    new_fee_dividers_deployed,
-    legacy_divisions
+    addresses_scanned: addresses_scanned.toString(),
+    fee_dividers_used: fee_dividers_used.toString(),
+    new_fee_dividers_deployed: new_fee_dividers_deployed.toString(),
+    legacy_divisions: legacy_divisions.toString()
   }
 
   const jsonString = JSON.stringify(finalReport, (key, value) =>
@@ -49,6 +49,14 @@ async function main() {
   )
 
   logger.log(jsonString)
+
+  const keys = Object.keys(finalReport)
+  for (const key of keys) {
+    const response = await fetch('https://vmagent.dev-p2p.org/api/v1/import/prometheus', {
+      method: 'POST',
+      body: `eth_fee_divider_${key}{network="mainnet"} ${(finalReport as Record<string, any>)[key]} ${finalReport.start_execution_timestamp}`
+    })
+  }
 
   logger.info('97-test finished')
 }
