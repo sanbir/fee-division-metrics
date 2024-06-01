@@ -4,18 +4,37 @@
   "homepage": "https://p2p.org/",
   "license": "MIT",
   "devDependencies": {
+    "@chainsafe/as-sha256": "^0.3.1",
+    "@chainsafe/bls-keygen": "0.4.0",
+    "@chainsafe/blst": "^0.2.8",
+    "@chainsafe/persistent-merkle-tree": "^0.5.0",
+    "@chainsafe/persistent-ts": "^0.19.1",
+    "@chainsafe/ssz": "^0.10.2",
+    "@lodestar/config": "^1.7.2",
+    "@lodestar/params": "^1.7.2",
+    "@lodestar/state-transition": "1.18.1",
+    "@lodestar/types": "^1.7.2",
+    "@lodestar/utils": "^1.7.2",
+    "@types/buffer-xor": "^2.0.0",
     "@types/express": "4.17.21",
+    "@types/mockery": "^1.4.30",
     "@types/node": "20.11.17",
     "axios": "1.6.7",
+    "bigint-buffer": "^1.1.5",
+    "blst": "^0.1.6",
+    "buffer-xor": "^2.0.2",
     "dotenv": "16.4.5",
     "express": "4.19.2",
     "log4js": "6.9.1",
+    "mockery": "^2.1.0",
     "ts-node": "10.9.2",
     "typescript": "5.1.6",
-    "viem": "2.7.6"
+    "viem": "2.7.6",
+    "ethers": "5.7.1"
   },
   "scripts": {
     "97-test": "ts-node 97-test.ts",
+    "96-generateDepositData": "ts-node 96-generateDepositData.ts",
     "start": "ts-node index.ts"
   }
 }
